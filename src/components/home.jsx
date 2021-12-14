@@ -17,8 +17,7 @@ function Home() {
             rating={4}
             image="https://m.media-amazon.com/images/I/714bAHH6LrL._AC_UY218_.jpg"
           ></Product>
-        </div>
-        <div className="home-row">
+
           <Product
             id="121314"
             title="Shoe"
@@ -26,8 +25,30 @@ function Home() {
             rating={4}
             image="https://m.media-amazon.com/images/I/714bAHH6LrL._AC_UY218_.jpg"
           ></Product>
-        </div>
-        <div className="home-row">
+
+          <Product
+            id="121314"
+            title="Shoe"
+            price={11.96}
+            rating={4}
+            image="https://m.media-amazon.com/images/I/714bAHH6LrL._AC_UY218_.jpg"
+          ></Product>
+          <Product
+            id="121314"
+            title="Shoe"
+            price={11.96}
+            rating={4}
+            image="https://m.media-amazon.com/images/I/714bAHH6LrL._AC_UY218_.jpg"
+          ></Product>
+
+          <Product
+            id="121314"
+            title="Shoe"
+            price={11.96}
+            rating={4}
+            image="https://m.media-amazon.com/images/I/714bAHH6LrL._AC_UY218_.jpg"
+          ></Product>
+
           <Product
             id="121314"
             title="Shoe"

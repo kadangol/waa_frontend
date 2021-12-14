@@ -14,7 +14,7 @@ function Header() {
         <Link to="/Login" className="header-link">
           <div className="header-option">
             <span className="header-optionLineOne">Hello, user</span>
-            <span className="header-optionLineTwo">Sign in </span>
+            <span className="header-optionLineTwo">Sign in/Register </span>
           </div>
         </Link>
         <Link to="/Login" className="header-link">

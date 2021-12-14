@@ -1,6 +1,6 @@
 .product{
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-rows: auto auto auto;
     max-height: 400px;
     min-height: 100px;
     margin: 10px;

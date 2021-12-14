@@ -1,40 +1,5 @@
 *{
     margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-.main-container{
-   
-  
-
-}
-
-/* nav-bar styling */
-
-
- 
-
-.navbar{
-   display: flex;
     
-  
-}
-.nav-title{
-  
-    display: inline-block;
-    padding-top: 1%;
-    color:#db8627;
-    font-size: 48px;
-}
-.icons{
-justify-content: space-evenly;
-}
-.nav-link{
-    padding-top: 5%;
 }
 
-
-.footer{
-    padding-top: 80%;
-}

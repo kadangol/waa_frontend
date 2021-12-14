@@ -9,10 +9,12 @@
 }
 
 .header-logo{
+   
     color: #db8627;
-    font-size: 48px;
+    font-size: 40px;
     margin: 0 20px;
     margin-top: 18px;
+    object-fit: contain;
 }
 .header-search{
     display: flex;
@@ -45,7 +47,7 @@
     color: white;
 }
 .header-optionLineTwo{
-    font-size: 10px;
+    font-size: 13px;
     font-weight: 800;
 }
 .header-optionBasket{
