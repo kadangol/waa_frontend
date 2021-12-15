@@ -4,6 +4,7 @@ import Register from './register';
 import {useNavigate} from 'react-router-dom'
 
 function Login() {
+ 
   const navigate = useNavigate();
   const handleClick = () => navigate("/register")
     return (
@@ -16,7 +17,7 @@ function Login() {
             <input type="email" />
             <h5>Password</h5>
             <input type="password" />
-            <button onClick={loginUser} type="submit" className="login-signinButton">
+            <button onClick={handleClick} type="submit" className="login-signinButton">
               {" "}
               Sign In
             </button>
