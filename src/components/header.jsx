@@ -2,8 +2,10 @@ import React from 'react'
 import { FaSearch, FaShoppingCart } from "react-icons/fa";
 import '../styling/header.css'
 import { Link } from 'react-router-dom';
+import { useStateValue } from '../context/stateProvider';
 
 function Header() {
+  const [{basket}, dispatch] = useStateValue();
     return (
       <nav className="header">
         <h1 className="header-logo">Mini Amazon</h1>
@@ -26,7 +28,7 @@ function Header() {
         <Link to="/checkout" className="header-link">
           <div className="header-optionBasket">
             <FaShoppingCart />
-            <span className="header-optionLineTwo header-basketCount" >3</span>
+            <span className="header-optionLineTwo header-productCount" >{basket?.length}</span>
           </div>
         </Link>
       </nav>

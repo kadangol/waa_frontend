@@ -7,18 +7,24 @@ import Login from './components/login';
 import Home from './components/home';
 import Checkout from './components/checkout';
 import Footer from './components/footer'
+import Register from './components/register';
+import NavLinks from './components/navLinks';
+import Product from './components/product';
 
 
 function App() {
   return (
     <Router>
       <div className="main-container">
-         <Header />
+        <Header />
+        <NavLinks />
         <Routes>
-         
           <Route exact path="/checkout" element={<Checkout />} />
           <Route exact path="/login" element={<Login />} />
+          <Route exact path="/register" element={<Register />} />
           <Route exact path="/" element={<Home />} />
+          <Route exact path="/home" element={<Home />} />
+          <Route exact path="/product" element={<Product />} />
         </Routes>
       </div>
       <Footer />

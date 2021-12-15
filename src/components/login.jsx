@@ -1,7 +1,11 @@
 import React from 'react'
 import '../styling/login.css'
+import Register from './register';
+import {useNavigate} from 'react-router-dom'
 
 function Login() {
+  const navigate = useNavigate();
+  const handleClick = () => navigate("/register")
     return (
       <div className="login">
         <h1 className="header-logo">Mini Amazon</h1>
@@ -12,7 +16,7 @@ function Login() {
             <input type="email" />
             <h5>Password</h5>
             <input type="password" />
-            <button type="submit" className="login-signinButton">
+            <button onClick={loginUser} type="submit" className="login-signinButton">
               {" "}
               Sign In
             </button>
@@ -20,7 +24,12 @@ function Login() {
           <p>
             By signing-in, you are argreeing to MiniAmazon Terms and Condition
           </p>
-          <button className='login-registerButton'>create MiniAmazon account</button>
+          <button className="login-registerButton">
+            create MiniAmazon account
+          </button>
+          <button className="login-registerButton" onClick={handleClick}>
+            Register
+          </button>
         </div>
       </div>
     );
