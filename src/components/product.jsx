@@ -1,7 +1,8 @@
-import React from 'react';
+import {React, useState} from 'react';
 import { connect } from 'react-redux';
 import { addToBasket, addItemToCart } from '../actions/itemActions';
 import '../styling/product.css';
+import withAuth from '../hoc/auth';
 
 function Product({
     id,
@@ -10,6 +11,7 @@ function Product({
     price,
     rating,
     description,
+    role,
     nameOfSeller,
     shippingAddress,
     pushItemToCart,
@@ -29,6 +31,12 @@ function Product({
             shippingAddress
         })
     };
+    const [isBuyer, setIsBuyer] = useState(true)//(role === 'buyer') //TODO it should read from UserDetails
+    const [showReview, setShowReview] = useState(false);
+    const toggleReviewVisibility = () => {
+        //TODO set review data if(role === 'BUYER')
+        setShowReview(!showReview);
+    }
     return (
         <div className='product'>
             <div className='product-info'>
@@ -47,7 +55,11 @@ function Product({
             </div>
             <img src={image} alt='' />
             <p>{description}</p>
-            <button onClick={handleAddToCart}>Add to Cart</button>
+            { showReview ? <div><h5>Product reviews: {role}</h5><review /></div> : null}
+            
+            <button onClick={toggleReviewVisibility}>Show reviews</button>
+            { isBuyer ? <button onClick={handleAddToCart}>Add to Cart</button> : null}
+            
         </div>
     );
 }
