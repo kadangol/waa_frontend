@@ -1,12 +1,12 @@
-import React from 'react'
-import { connect } from 'react-redux';
-import Product from './product';
-import { getProducts } from '../actions/itemActions'
-import '../styling/home.css';
+import React from "react";
+import { connect } from "react-redux";
+import Product from "./product";
+import { getProducts } from "../actions/itemActions";
+import "../styling/home.css";
 function Home({ fetchProduct, allProducts }) {
   React.useEffect(() => {
-    fetchProduct()
-  }, [])
+    fetchProduct();
+  }, []);
 
   return (
     <div className="home">
@@ -34,13 +34,11 @@ function Home({ fetchProduct, allProducts }) {
   );
 }
 
-
 const mapStateToProps = (state) => {
   return {
     allProducts: state.itemReducer.allProducts,
   };
 };
-
 
 const mapDispatchToProps = (dispatch) => {
   return {

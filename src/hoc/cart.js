@@ -1,16 +1,16 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { getCartItems } from '../actions/itemActions'
+import React from "react";
+import { connect } from "react-redux";
+import { getCartItems } from "../actions/itemActions";
 
 const withCart = (WrappedComponent) => {
   class Cart extends React.Component {
     componentDidMount() {
-      const { fetchCartItems, userDetails } = this.props
-      if(userDetails) fetchCartItems()
+      const { fetchCartItems, userDetails } = this.props;
+      if (userDetails) fetchCartItems();
     }
-    
+
     render() {
-      return <WrappedComponent />
+      return <WrappedComponent />;
     }
   }
 
@@ -27,6 +27,6 @@ const withCart = (WrappedComponent) => {
   };
 
   return connect(mapStateToProps, mapDispatchToProps)(Cart);
-}
+};
 
-export default withCart
+export default withCart;

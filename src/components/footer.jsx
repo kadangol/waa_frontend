@@ -1,5 +1,5 @@
-import React from 'react'
-import '../styling/footer.css'
+import React from "react";
+import "../styling/footer.css";
 
 function FooterComponent() {
   return (
@@ -11,4 +11,4 @@ function FooterComponent() {
   );
 }
 
-export default FooterComponent
+export default FooterComponent;
