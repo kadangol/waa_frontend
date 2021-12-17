@@ -1,12 +1,12 @@
 import React from 'react'
 import '../styling/login.css'
-import Register from './register';
+import Signup from './signup';
 import {useNavigate} from 'react-router-dom'
 
 function Login() {
  
   const navigate = useNavigate();
-  const handleClick = () => navigate("/register")
+  const handleClick = () => navigate("/signup")
     return (
       <div className="login">
         <h1 className="header-logo">Mini Amazon</h1>
