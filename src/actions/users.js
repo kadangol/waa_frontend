@@ -8,6 +8,8 @@ if (userDetails) {
     token = `Bearer ${userDetails.accessToken}`
 }
 
+const BASE_URL = process.env.REACT_APP_BASE_URL
+
 // Login actions
 export function loginError(bool) {
     return {
@@ -32,16 +34,13 @@ export function loginSuccess(data) {
 
 export function login(loginData) {
     return (dispatch) => {
-        console.log(loginData, 'loginData')
         dispatch(loginLoading(true));
 
 
         axios
-            .post('http://localhost:8082/api/auth/signin', {
+            .post(`${BASE_URL}/api/auth/signin`, {
                 "username": loginData.user,
                 "password": loginData.password,
-                // "password": "string",
-                // "username": "admin"
             })
             .then((response) => {
                 if (response.status !== 200) {
@@ -50,13 +49,17 @@ export function login(loginData) {
 
                 dispatch(loginLoading(false));
 
-
                 return response;
             })
             .then((response) => {
                 dispatch(loginSuccess(response.data))
-                localStorage.setItem('userDetails', JSON.stringify(response.data));
-                window.location.href = "/home"
+                if (response.data.buyerId > 0) {
+                    dispatch(fetchBuyerDetail({ id: response.data.buyerId, accessToken: response.data.accessToken }));
+                    localStorage.setItem('userDetails', JSON.stringify(response.data));
+                } else {
+                    localStorage.setItem('userDetails', JSON.stringify(response.data));
+                    window.location.href = "/home"
+                }
             })
             .catch(() => dispatch(loginError(true)));
     };
@@ -66,10 +69,9 @@ export function login(loginData) {
 // Register actions
 export function register(registerData) {
     return (dispatch) => {
-        console.log(registerData, 'registerData')
         dispatch(loginLoading(true));
 
-        const url = `http://localhost:8082/${registerData.status === 'buyer' ? 'buyer' : 'seller'}/sign-up`
+        const url = `${BASE_URL}/${registerData.status === 'buyer' ? 'buyer' : 'seller'}/sign-up`
 
         axios
             .post(url, registerData)
@@ -95,7 +97,59 @@ export function register(registerData) {
 // Logout actions
 export function logout() {
     localStorage.removeItem('userDetails');
+    localStorage.removeItem('shippingAddress');
     window.location.href = "/home"
+}
+
+// Fetch buyer details, for shipping address
+export function fetchBuyerDetailError(bool) {
+    return {
+        type: 'FETCH_BUYER_DATA_ERROR',
+        hasError: bool,
+    };
+}
+
+export function fetchBuyerDetailLoading(bool) {
+    return {
+        type: 'FETCH_BUYER_DATA_LOADING',
+        isLoading: bool,
+    };
+}
+
+export function fetchBuyerDetailSuccess(data) {
+    return {
+        type: 'FETCH_BUYER_DATA_SUCCESS',
+        data,
+    };
+}
+
+export function fetchBuyerDetail({ id, accessToken }) {
+    return (dispatch) => {
+        dispatch(fetchBuyerDetailLoading(true));
+
+        axios
+            .get(`${BASE_URL}/buyer/${id}`, {
+                headers: {
+                    "Authorization": `Bearer ${accessToken}`
+                }
+            })
+            .then((response) => {
+                if (response.status !== 200) {
+                    throw Error(response.statusText);
+                }
+
+                dispatch(fetchBuyerDetailLoading(false));
+
+                return response;
+            })
+            .then((response) => {
+                dispatch(fetchBuyerDetailSuccess(response.data.shippingAddress))
+                localStorage.setItem('shippingAddress', JSON.stringify(response.data.shippingAddress));
+
+                window.location.href = "/home"
+            })
+            .catch(() => dispatch(fetchBuyerDetailError(true)));
+    };
 }
 
 // Fetching unapproved sellers
@@ -125,7 +179,7 @@ export function getUnApprovedSellers() {
         dispatch(fetchingUnapprovedSellerListAreLoading(true));
 
         axios
-            .get('http://localhost:8082/seller/unapprovedSellers', {
+            .get(`${BASE_URL}/seller/unapprovedSellers`, {
                 headers: {
                     "Authorization": token
                 }
@@ -171,7 +225,7 @@ export function postApproveSeller({ id }) {
         dispatch(postApprovalSellerLoading(true));
 
         axios
-            .put(`http://localhost:8082/seller/${id}/approve`, {
+            .put(`${BASE_URL}/seller/${id}/approve`, { id }, {
                 headers: {
                     "Authorization": token
                 }
@@ -218,7 +272,7 @@ export function postRejectSeller({ id }) {
         dispatch(postRejectSellerLoading(true));
 
         axios
-            .put(`http://localhost:8082/seller/${id}/reject`, {
+            .put(`${BASE_URL}/seller/${id}/reject`, { id }, {
                 headers: {
                     "Authorization": token
                 }

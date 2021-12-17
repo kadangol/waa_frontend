@@ -1,22 +1,21 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { loginSuccess } from '../actions/users'
+import { loginSuccess, fetchBuyerDetailSuccess } from '../actions/users'
 
 const withAuth = (WrappedComponent) => {
-  function Auth({ userDetails, setUserData, history }) {
+  function Auth({ userDetails, setUserData, setShippingAddressData, history }) {
     const [role, setRole] = React.useState('')
     const navigate = useNavigate();
 
     React.useEffect(() => {
-      // const { userDetails, setUserData, history } = this.props
       const persistedUserDetail = localStorage.getItem('userDetails')
+      const persistedShippingAddress = localStorage.getItem('shippingAddress')
 
       if (persistedUserDetail && !userDetails) {
         const parsedData = JSON.parse(persistedUserDetail)
         setUserData(parsedData)
 
-        console.log(parsedData, 'i am parsed data')
         if (parsedData?.message === 'NOTAPPROVEDYET') navigate('/unapproved')
         if (!parsedData?.roles?.length) return
 
@@ -34,48 +33,16 @@ const withAuth = (WrappedComponent) => {
             break;
         }
       }
-    }, [history, setUserData, userDetails])
+
+      if (persistedShippingAddress) {
+        const parsedData = JSON.parse(persistedShippingAddress)
+        setShippingAddressData(parsedData)
+      }
+
+    }, [history, setUserData, setShippingAddressData, userDetails, navigate])
 
     return <WrappedComponent role={role} />
   }
-  // class Auth extends React.Component {
-  //   state = {
-  //     role: ''
-  //   }
-
-  //   componentDidMount() {
-  //     const { userDetails, setUserData, history} = this.props
-
-  //     const persistedUserDetail = localStorage.getItem('userDetails')
-
-  //     if (persistedUserDetail && !userDetails) {
-  //       const parsedData = JSON.parse(persistedUserDetail)
-  //       setUserData(parsedData)
-
-  //       console.log(parsedData, 'i am parsed data')
-  //       if(parsedData?.message === 'NOTAPPROVEDYET') console.log(history, 'history')
-  //       if (!parsedData?.roles?.length) return
-
-  //       switch (parsedData.roles[0]) {
-  //         case "ROLE_ADMIN":
-  //           this.setState({ role: 'admin' })
-  //           break;
-  //         case "ROLE_SELLER":
-  //           this.setState({ role: 'seller' })
-  //           break;
-  //         case "ROLE_BUYER":
-  //           this.setState({ role: 'buyer' })
-  //           break;
-  //         default:
-  //           break;
-  //       }
-  //     }
-  //   }
-
-  //   render() {
-
-  //   }
-  // }
 
   const mapStateToProps = (state) => {
     return {
@@ -86,6 +53,7 @@ const withAuth = (WrappedComponent) => {
   const mapDispatchToProps = (dispatch) => {
     return {
       setUserData: (userData) => dispatch(loginSuccess(userData)),
+      setShippingAddressData: (shippingData) => dispatch(fetchBuyerDetailSuccess(shippingData)),
     };
   };
 

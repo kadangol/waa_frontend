@@ -8,6 +8,8 @@ if (userDetails) {
     token = `Bearer ${userDetails.accessToken}`
 }
 
+const BASE_URL = process.env.REACT_APP_BASE_URL
+
 // old code
 export function addToBasket(item) {
     return {
@@ -43,7 +45,7 @@ export function getProducts() {
         dispatch(allProductsAreLoading(true));
 
         axios
-            .get('http://localhost:8082/product')
+            .get(`${BASE_URL}/product`)
             .then((response) => {
                 if (response.status !== 200) {
                     throw Error(response.statusText);
@@ -85,7 +87,7 @@ export function getCartItems() {
         dispatch(allCartItemsAreLoading(true));
 
         axios
-            .get('http://localhost:8082/orderline/getCart', {
+            .get(`${BASE_URL}/orderline/getCart`, {
                 headers: {
                     "Authorization": token
                 }
@@ -101,6 +103,54 @@ export function getCartItems() {
             })
             .then((response) => dispatch(allCartItemsFetchDataSuccess(response.data)))
             .catch(() => dispatch(allCartItemsHaveError(true)));
+    };
+}
+
+// Add item to cart
+
+export function addToCartItemHaveError(bool) {
+    return {
+        type: 'ADD_TO_CART_ERROR',
+        hasError: bool,
+    };
+}
+
+export function addToCartItemAreLoading(bool) {
+    return {
+        type: 'ADD_TO_CART_LOADING',
+        isLoading: bool,
+    };
+}
+
+export function addToCartItemFetchDataSuccess(cartItems) {
+    return {
+        type: 'ADD_TO_CART_SUCCESS',
+        cartItems,
+    };
+}
+
+export function addItemToCart(item) {
+    return (dispatch) => {
+        dispatch(addToCartItemAreLoading(true));
+
+        axios
+            .post(`${BASE_URL}/orderline/addToCart`, item, {
+                headers: {
+                    "Authorization": token
+                }
+            })
+            .then((response) => {
+                if (response.status !== 200) {
+                    throw Error(response.statusText);
+                }
+
+                dispatch(addToCartItemAreLoading(false));
+                dispatch(getCartItems());
+
+                return response;
+            })
+            .then((response) => dispatch(addToCartItemFetchDataSuccess(response.data)))
+            .catch(() => dispatch(addToCartItemHaveError(true)));
     };
 }
 
@@ -132,7 +182,7 @@ export function deleteCartItem({ itemId }) {
         dispatch(removeCartItemAreLoading(true));
 
         axios
-            .delete(`http://localhost:8082/orderline/${itemId}`, {
+            .delete(`${BASE_URL}/orderline/${itemId}`, {
                 headers: {
                     "Authorization": token
                 }

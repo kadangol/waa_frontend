@@ -10,12 +10,6 @@ function AddProduct({ saveProduct }) {
   const [quantity, setQuantity] = React.useState('')
 
   const handleSignIn = () => {
-    console.log({
-      name,
-      description,
-      price,
-      quantity
-    })
     saveProduct({
       name,
       description,
@@ -33,9 +27,9 @@ function AddProduct({ saveProduct }) {
         <h5>Description</h5>
         <textarea rows="5" onChange={(e) => setDescription(e.target.value)} />
         <h5>Price Per Unit</h5>
-        <input type='number' onChange={(e) => setPrice(e.target.value)} />
+        <input type='number' onChange={(e) => setPrice(+e.target.value)} />
         <h5>Quantity</h5>
-        <input type='number' onChange={(e) => setQuantity(e.target.value)} />
+        <input type='number' onChange={(e) => setQuantity(+e.target.value)} />
         <button
           onClick={handleSignIn}
           className='login-signinButton'

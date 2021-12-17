@@ -13,11 +13,8 @@ function Sellers({ unapprovedSellerList, fetchCartItems, saveApproveSeller, save
     }
 
     const handleReject = (id) => {
-        console.log(id, 'handle remove item')
         saveRejectSeller({ id })
     }
-
-    console.log(unapprovedSellerList, 'unapprovedSellerList')
 
     return (
         <div className='unapproved-seller-list'>

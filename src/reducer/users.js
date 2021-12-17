@@ -1,5 +1,6 @@
 const INITIAL_STATE = {
   userDetail: false,
+  shippingAddress: false,
   unapprovedSellers: [],
   unapprovedSellersLoading: true
 };
@@ -39,6 +40,22 @@ const userReducer = (state = INITIAL_STATE, action) => {
         ...state,
         unapprovedSellersLoading: false,
         unapprovedSellers: [],
+      };
+
+    case 'FETCH_BUYER_DATA_LOADING':
+      return {
+        ...state,
+        shippingAddress: false,
+      };
+    case 'FETCH_BUYER_DATA_SUCCESS':
+      return {
+        ...state,
+        shippingAddress: action.data,
+      };
+    case 'FETCH_BUYER_DATA_ERROR':
+      return {
+        ...state,
+        shippingAddress: false,
       };
 
     default:

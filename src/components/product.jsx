@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { addToBasket } from '../actions/itemActions';
+import { addToBasket, addItemToCart } from '../actions/itemActions';
 import '../styling/product.css';
 
 function Product({
@@ -11,6 +11,8 @@ function Product({
     rating,
     description,
     nameOfSeller,
+    shippingAddress,
+    pushItemToCart,
     addToBasket,
 }) {
     const handleAddToCart = () => {
@@ -21,7 +23,11 @@ function Product({
             price: price,
             rating: rating,
         });
-        // pushItemToCart({ id })
+        pushItemToCart({
+            productId: id,
+            quantity: 1,
+            shippingAddress
+        })
     };
     return (
         <div className='product'>
@@ -46,10 +52,18 @@ function Product({
     );
 }
 
+const mapStateToProps = (state) => {
+    return {
+      shippingAddress: state.userReducer?.shippingAddress,
+    };
+  };
+
+  
 const mapDispatchToProps = (dispatch) => {
     return {
         addToBasket: (item) => dispatch(addToBasket(item)),
+        pushItemToCart: (item) => dispatch(addItemToCart(item)),
     };
 };
 
-export default connect(null, mapDispatchToProps)(Product);
+export default connect(mapStateToProps, mapDispatchToProps)(Product);

@@ -12,9 +12,8 @@ function Login({ userDetails, postLogin }) {
     const handleClick = () => navigate('/register');
 
     React.useEffect(() => {
-        console.log(userDetails, 'userDetails')
         if (userDetails) navigate('/home')
-    }, []);
+    }, [userDetails, navigate]);
 
     const handleSignIn = () => {
         postLogin({

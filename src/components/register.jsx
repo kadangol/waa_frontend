@@ -18,23 +18,38 @@ function Register({ postRegister }) {
   })
 
   const handleShippingAdrressChange = (val, name) => {
-    console.log(val, 'val')
     setShippingAddress({
       ...shippingAddress,
       [name]: val
     })
   }
 
+  const validateEmail = () => {
+    return String(email)
+      .toLowerCase()
+      .match(
+        /^[\w._-]+[+]?[\w._-]+@[\w.-]+\.[a-zA-Z]{2,6}$/
+      );
+  };
+
   const handleRegister = () => {
-    postRegister({
-      fullName: name,
-      userName,
-      phoneNo: phone,
-      emailAddress: email,
-      password,
-      status,
-      shippingAddress
-    })
+    const isEmailValid = validateEmail()
+    if (!isEmailValid) {
+      alert('Email not valid!!')
+    } else if (shippingAddress.zipcode.length < 5) {
+      alert('zip code not valid!!')
+    } else {
+      postRegister({
+        fullName: name,
+        userName,
+        phoneNo: phone,
+        emailAddress: email,
+        password,
+        status,
+        shippingAddress
+      })
+    }
+
   }
 
   return (
