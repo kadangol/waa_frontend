@@ -1,12 +1,17 @@
-import React from 'react'
-import { connect } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { getSellerProducts, deleteProduct } from '../actions/sellerProduct'
+import React from "react";
+import { connect } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { getSellerProducts, deleteProduct } from "../actions/sellerProduct";
 
-function SellerProduct({ sellerId, fetchSellerProducts, removeProduct, sellerProductList }) {
+function SellerProduct({
+  sellerId,
+  fetchSellerProducts,
+  removeProduct,
+  sellerProductList,
+}) {
   React.useEffect(() => {
-    if (sellerId) fetchSellerProducts({ sellerId })
-  }, [fetchSellerProducts, sellerId])
+    if (sellerId) fetchSellerProducts({ sellerId });
+  }, [fetchSellerProducts, sellerId]);
 
   const navigate = useNavigate();
 
@@ -15,14 +20,14 @@ function SellerProduct({ sellerId, fetchSellerProducts, removeProduct, sellerPro
   // }
 
   const handleDelete = (id) => {
-    removeProduct({ id, sellerId })
-  }
+    removeProduct({ id, sellerId });
+  };
 
   return (
     <div>
-      <button onClick={() => navigate('/add-product')}>Add Product</button>
+      <button onClick={() => navigate("/add-product")}>Add Product</button>
 
-      <div className='unapproved-seller-list'>
+      <div className="unapproved-seller-list">
         <table>
           <thead>
             <tr>
@@ -44,12 +49,11 @@ function SellerProduct({ sellerId, fetchSellerProducts, removeProduct, sellerPro
                 </td>
               </tr>
             ))}
-
           </tbody>
         </table>
       </div>
     </div>
-  )
+  );
 }
 
 const mapStateToProps = (state) => {
@@ -58,7 +62,6 @@ const mapStateToProps = (state) => {
     sellerProductList: state.sellerProductReducer.sellerProducts,
   };
 };
-
 
 const mapDispatchToProps = (dispatch) => {
   return {
